@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+
+<body>
+    <%- include('./partials/header.ejs') %>
+    <main class="movieForm-main">
+        <form action='/movies/create' method="post" class="movieForm">
+            <img class="form-img" src="/img/assets/movie.svg" alt="">
+            <div class="movieForm-div">
+                <label for="movieTitle">Título de la pelicula:</label>
+                <input type="text" name="title" id="movieTitle">
+            </div>
+            
+            <div  class="movieForm-div">
+                <label for="length">Duracíon en minutos:</label>
+                <input type="number" name="length" id="length">
+            </div>
+            
+            <div  class="movieForm-div">
+                <label for="rating">Puntuación:</label>
+                <input type="number" name="rating" id="rating" step="0.1">
+            </div>
+            
+            <div  class="movieForm-div">
+                <label for="awards">Premios:</label>
+                <input type="number" name="awards" id="awards">
+            </div>
+            
+            <div  class="movieForm-div">
+                <label for="releaseDate">Fecha de estreno:</label>
+                <input type="date" name="release_date" id="releaseDate">
+            </div>
+
+            <div class="movieForm-div-button">
+                <button type="submit">Enviar</button>
+                <button type="reset">Reiniciar</button>
+            </div>
+
+        </form>
+
+
+    </main>
+    
+</body>
+</html>
