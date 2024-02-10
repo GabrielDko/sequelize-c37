@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+
+<body class="black-body">
+    <%- include('./partials/header.ejs') %>
+    <main class="movieForm-main">
+        <form action='/movies/create' method="post" class="movieForm">
+            <img class="form-img" src="/img/assets/actor.svg" alt="">
+            <div class="movieForm-div">
+                <label for="actorfirst_name">Nombre:</label>
+                <input type="text" name="first_name" id="actorfirst_name">
+                <p><%= locals.errors && errors.first_name ? errors.first_name.msg : null %></p>
+            </div>
+            <div  class="movieForm-div">
+                <label for="actorLast_name">Apellido:</label>
+                <input type="text" name="last_name" id="actorLast_name">
+                <p><%= locals.errors && errors.last_name ? errors.last_name.msg : null %></p>
+            </div>
+            <div  class="movieForm-div">
+                <label for="rating">Rating:</label>
+                <input type="number" name="rating" id="rating" step="0.1">
+                <p><%= locals.errors && errors.rating ? errors.rating.msg : null %></p>
+            </div>
+            <div class="movieForm-div-button">
+                <button type="submit">Enviar</button>
+                <button type="reset">Reiniciar</button>
+            </div>
+
+        </form>
+
+
+    </main>
+    
+</body>
+</html>

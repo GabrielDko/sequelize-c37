@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
     <%- include('./partials/head.ejs') %>
 
-    <body>
-      <%- include('./partials/header.ejs') %>   
-    <h1><%= actor.first_name %> </h1>
-    <br>
-    <p>NAME: <%= genre.name %> </p>
-    <p>RANKIG: <%= genre.ranking %> </p>
-
+    <body class="black-body">
+      <%- include('./partials/header.ejs') %>
+<main style="text-align: center; " >
+    <div style="background-color :#e51b3e; padding: 20px; border-radius: 15px;">
+      <h1 class="detail-title"><%= actor.first_name %></h1>    
+      <br>
+      <p>Nombre completo:<%= actor.first_name %> <%= actor.last_name %></p>
+      <br>
+      <p>RATING: <%= actor.rating %> </p>
+      <br>
+      <br>
+    <form action="/actors/delete/<%= actor.id %>?_method=DELETE" method="post" class="movieForm-div-button">
+      <button ><a href="/actors/edit/<%= actor.id %>">Editar</a></button>
+      <button type="submit">¡Destruir!</button>
+    </form>
+    </div>
+  </main>
 </body>
 </html>
