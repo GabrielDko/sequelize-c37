@@ -1,7 +1,7 @@
 const {body}=require("express-validator")
 const db = require('../database/models')
 
-let movieValidator=[
+let movieUpdateValidator=[
     body("title")
     .notEmpty().withMessage("*Debes ingresar un título.").bail()
     .isLength({min:5, max:15}).withMessage("*Debe poseer una cantidad mínima de 5 carácteres y una máxima de 15.")
@@ -29,4 +29,4 @@ let movieValidator=[
     .notEmpty().withMessage('*Debe ingresar una fecha')
     .isDate().withMessage('*Debe ingresar un formato de fecha válido').bail()
 ]
-module.exports= movieValidator;
+module.exports= movieUpdateValidator;

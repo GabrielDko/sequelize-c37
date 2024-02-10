@@ -7,12 +7,19 @@
 
 }
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
+main {
+  padding: 5%;
+  color: white;
+}
+
+main a {
   color: #00B7FF;
+}
+.header a {
+  color: #232323;
 }
 .figure-img{
   width: 100%;

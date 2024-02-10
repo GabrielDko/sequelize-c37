@@ -2,7 +2,7 @@
 <html lang="en">
     <%- include('./partials/head.ejs') %>
 
-<body>
+<body class="black-body">
     <%- include('./partials/header.ejs') %>
     <main class="movieForm-main">
         <form action='/movies/edit/<%= movie.id %>?_method=PUT' method="post" class="movieForm">
@@ -10,33 +10,32 @@
             <div class="movieForm-div">
                 <label for="movieTitle">Título de la pelicula:</label>
                 <input type="text" name="title" id="movieTitle" value="<%= movie.title %>">
+                <p><%= locals.errors && errors.title ? errors.title.msg : null %></p>
             </div>
-            
             <div  class="movieForm-div">
                 <label for="length">Duracíon en minutos:</label>
                 <input type="number" name="length" id="length"  value="<%= movie.length %>">
+                <p><%= locals.errors && errors.length ? errors.length.msg : null %></p>
             </div>
-            
             <div  class="movieForm-div">
                 <label for="rating">Puntuación:</label>
                 <input type="number" name="rating" id="rating" step="0.1"  value="<%= movie.rating %>">
+                <p><%= locals.errors && errors.rating ? errors.rating.msg : null %></p>
             </div>
-            
             <div  class="movieForm-div">
                 <label for="awards">Premios:</label>
                 <input type="number" name="awards" id="awards"  value="<%= movie.awards %>">
+                <p><%= locals.errors && errors.awards ? errors.awards.msg : null %></p>
             </div>
-            
             <div  class="movieForm-div">
                 <label for="releaseDate">Fecha de estreno:</label>
                 <input type="date" name="release_date" id="releaseDate"  value="<%= movie.release_date %>">
+                <p><%= locals.errors && errors.release_date ? errors.release_date.msg : null %></p>
             </div>
-
             <div class="movieForm-div-button">
                 <button type="submit">Actualizar</button>
-                <button type="reset">Borrar</button>
+                <button type="reset">Limpiar</button>
             </div>
-
         </form>
 
 

@@ -1,4 +1,8 @@
 
+.black-body{
+    background-color: #232323;
+}
+
 .movieForm-main {
     text-align: center;
     padding: 5%;
@@ -7,7 +11,7 @@
 .movieForm {
     margin: auto;
     border: 2px black solid;
-    width: 50%;
+    width: 80%;
     padding: 30px;
     background-color: #e51b3e;
     color: white;
@@ -34,7 +38,7 @@
     text-align: start;
 }
 
-.movieForm-div-button button {
+.movieForm-div-button button, .movieForm-div-button button a  {
     padding: 10px;
     border-radius: 15px;
     font-size: 12px;
@@ -49,4 +53,27 @@
 
 .form-img {
     width: 10%;
+}
+
+.detail-title {
+    animation: detail_title 5000ms infinite;
+}
+
+@keyframes detail_title {
+    0% {color: white;}
+    25% {color: #232323;}
+    50% {color: white;}
+    75% {color: #232323;}
+    100% {color: white;}
+
+}
+@media (min-width: 480px){
+    .movieForm {
+        width: 50%;
+        padding: 30px;
+        background-color: #e51b3e;
+        color: white;
+        border-radius: 15px;
+        font-size: 16px;
+    }
 }

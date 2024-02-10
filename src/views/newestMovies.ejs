@@ -2,8 +2,9 @@
 <html lang="es">
     <%- include('./partials/head.ejs') %>
 
-    <body>
+    <body class="black-body">
       <%- include('./partials/header.ejs') %>
+      <main>
     <h1>PELIÍCULAS ORDENADASR FECHA</h1>
     <ul>
         <% for( let i = 0; i < movies.length; i++ ) { %>
@@ -14,5 +15,6 @@
         <% } %>
         
     </ul>
+</main>
 </body>
 </html>

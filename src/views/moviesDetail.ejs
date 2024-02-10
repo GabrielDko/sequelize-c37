@@ -2,15 +2,25 @@
 <html lang="en">
     <%- include('./partials/head.ejs') %>
 
-    <body>
+    <body class="black-body">
       <%- include('./partials/header.ejs') %>
-    <h1><%= movie.title %> </h1>    
+<main style="text-align: center; " >
+    <div style="background-color :#e51b3e; padding: 20px; border-radius: 15px;">
+      <h1 class="detail-title"><%= movie.title %> </h1>    
     <br>
-    <p>RATING: <%= movie.rating %> </p>
-    <p>AWARDS: <%= movie.awards %> </p>
-    <p>LENGTH: <%= movie.length + ' min'%> </p>
-    <p>RELEASE DATE: <%= movie.release_date %> </p>
-
-    <button><a href="/movies/edit/<%= movie.id %>">Editar</a></button>
+      <p>RATING: <%= movie.rating %> </p>
+      <br>
+      <p>AWARDS: <%= movie.awards %> </p>
+      <br>
+      <p>LENGTH: <%= movie.length + ' min'%> </p>
+      <br>
+      <p>RELEASE DATE: <%= movie.release_date %> </p>
+      <br>
+    <form action="/movies/delete/<%= movie.id %>?_method=DELETE" method="post" class="movieForm-div-button">
+      <button ><a href="/movies/edit/<%= movie.id %>">Editar</a></button>
+      <button type="submit">¡Destruir!</button>
+    </form>
+    </div>
+  </main>
 </body>
 </html>
