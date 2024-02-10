@@ -20,11 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         rating: {
             type: DataTypes.DECIMAL,
             allowNull: true,
-        },
-        favorite_movie_id: {
-            type: DataTypes.INTEGER,
-            unsigned: true,
-            forgeinKey: true
+        // },
+        // favorite_movie_id: {
+        //     type: DataTypes.INTEGER,
+        //     unsigned: true,
+        //     forgeinKey: true
         }
         
     }
