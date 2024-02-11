@@ -12,7 +12,11 @@ const genresController = {
             .catch(err => console.log(err));
     },
     detail:(req,res)=>{
-        db.Genre.findByPk(req.params.id)
+        db.Genre.findByPk(req.params.id,{
+            include: [
+                {association: 'movies'}
+            ]
+        })
             .then((genre)=>{
                 res.render('genresDetail', {genre:genre, title: `Detalle ${genre.dataValues.name}`})
             })

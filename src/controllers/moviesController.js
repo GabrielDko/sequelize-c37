@@ -14,7 +14,12 @@ const moviesController = {
             })
     },
     detail:(req,res)=>{
-        db.Movie.findByPk(req.params.id)
+        db.Movie.findByPk(req.params.id,{
+            include: [
+                {association: 'genres'},
+                {association: 'actors'}
+            ]
+        })
             .then((movie)=>{
                 res.render('moviesDetail', {movie:movie,title:`${movie.dataValues.title}`})
             })

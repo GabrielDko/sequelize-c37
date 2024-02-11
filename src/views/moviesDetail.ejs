@@ -16,10 +16,22 @@
       <br>
       <p>RELEASE DATE: <%= movie.release_date %> </p>
       <br>
-    <form action="/movies/delete/<%= movie.id %>?_method=DELETE" method="post" class="movieForm-div-button">
-      <button ><a href="/movies/edit/<%= movie.id %>">Editar</a></button>
-      <button type="submit">¡Destruir!</button>
+      <p> <%= movie.genres ? `Genre: ${movie.genres.name}` : null %></p>
+      <br>
+      <% if(movie.actors.length > 0){ %>
+          <h3>Actors</h3>
+        <% movie.actors.forEach(actor => { %>
+          <br>
+          <p><%= actor.first_name  %> <%= actor.last_name  %></p>
+          <br>
+        <% }) %>
+      <% } %>
+      <div class="movieForm-div-button">
+      <a href="/movies/edit/<%= movie.id %>"><button >Edit</button></a>
+      <form action="/movies/delete/<%= movie.id %>?_method=DELETE" method="post">
+      <button type="submit">¡Destroy!</button>
     </form>
+    </div>
     </div>
   </main>
 </body>

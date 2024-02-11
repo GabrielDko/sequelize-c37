@@ -4,15 +4,22 @@
 
     <body class="black-body">
       <%- include('./partials/header.ejs') %>
-<main style="text-align: center; " >
+<main style="text-align: center;">
     <div style="background-color :#e51b3e; padding: 20px; border-radius: 15px;">
       <h1 class="detail-title"><%= actor.first_name %></h1>    
       <br>
-      <p>Nombre completo:<%= actor.first_name %> <%= actor.last_name %></p>
+      <p>Full name:<%= actor.first_name %> <%= actor.last_name %></p>
       <br>
       <p>RATING: <%= actor.rating %> </p>
       <br>
-      <br>
+      <% if(actor.movies.length > 0){ %>
+      <h3>Movies</h3>
+      <% actor.movies.forEach(movie =>{  %>
+        <br>
+        <p><%= movie.title %></p>
+        <br>
+      <% }) %>
+      <% } %>
     <form action="/actors/delete/<%= actor.id %>?_method=DELETE" method="post" class="movieForm-div-button">
       <button ><a href="/actors/edit/<%= actor.id %>">Editar</a></button>
       <button type="submit">¡Destruir!</button>

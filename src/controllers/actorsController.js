@@ -25,7 +25,11 @@ const actorsController = {
         })
     },
     detail:(req,res)=>{
-        db.Actor.findByPk(req.params.id)
+        db.Actor.findByPk(req.params.id,{
+            include: [
+                {association: 'movies'}
+            ]
+        })
             .then((actor)=>{
                 res.render('actorsDetail', {actor:actor, title: `Detalle de ${actor.dataValues.first_name}`})
             })
