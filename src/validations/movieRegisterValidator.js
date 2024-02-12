@@ -4,7 +4,7 @@ const db = require('../database/models')
 let movieValidator=[
     body("title")
     .notEmpty().withMessage("*Debes ingresar un título.").bail()
-    .isLength({min:5, max:15}).withMessage("*Debe poseer una cantidad mínima de 5 carácteres y una máxima de 15.")
+    .isLength({min:5, max:25}).withMessage("*Debe poseer una cantidad mínima de 5 carácteres y una máxima de 25.")
     .custom((value, { req }) => {
         return db.Movie.findOne({
             where: {
@@ -27,6 +27,6 @@ let movieValidator=[
     .isInt().withMessage('*Debe especificar un número entero.'),
     body('release_date')
     .notEmpty().withMessage('*Debe ingresar una fecha')
-    .isDate().withMessage('*Debe ingresar un formato de fecha válido').bail()
+    .isISO8601().withMessage('*Debe ingresar una fecha y hora en formato ISO 8601')
 ]
 module.exports= movieValidator;

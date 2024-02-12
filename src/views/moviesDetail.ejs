@@ -16,7 +16,7 @@
       <br>
       <p>RELEASE DATE: <%= movie.release_date %> </p>
       <br>
-      <p> <%= movie.genres ? `Genre: ${movie.genres.name}` : null %></p>
+      <p> <%= movie.genre ? `Genre: ${movie.genre.name}` : null %></p>
       <br>
       <% if(movie.actors.length > 0){ %>
           <h3>Actors</h3>
@@ -27,11 +27,9 @@
         <% }) %>
       <% } %>
       <div class="movieForm-div-button">
-      <a href="/movies/edit/<%= movie.id %>"><button >Edit</button></a>
-      <form action="/movies/delete/<%= movie.id %>?_method=DELETE" method="post">
-      <button type="submit">¡Destroy!</button>
-    </form>
-    </div>
+        <a href="/movies/edit/<%= movie.id %>"><button >Edit</button></a>
+        <a href="/movies/deleteForm/<%= movie.id %>"><button>¿Destroy?</button></a>
+      </div>
     </div>
   </main>
 </body>

@@ -20,10 +20,10 @@
         <br>
       <% }) %>
       <% } %>
-    <form action="/actors/delete/<%= actor.id %>?_method=DELETE" method="post" class="movieForm-div-button">
-      <button ><a href="/actors/edit/<%= actor.id %>">Editar</a></button>
-      <button type="submit">¡Destruir!</button>
-    </form>
+      <div class="movieForm-div-button">
+        <a href="/actors/edit/<%= actor.id %>"><button >Edit</button></a>
+        <a href="/actors/deleteForm/<%= actor.id %>"><button>¿Destroy?</button></a>
+      </div>
     </div>
   </main>
 </body>

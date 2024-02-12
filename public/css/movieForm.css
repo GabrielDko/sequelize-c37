@@ -4,7 +4,7 @@
 }
 
 .movieForm-main {
-    text-align: center;
+    margin: auto;
     padding: 5%;
 }
 
@@ -19,24 +19,26 @@
     font-size: 16px;
 }
 
+.img-box{
+    text-align: center;
+}
 
+.movieForm-div-button {
+    text-align: center;
+}
 .movieForm-div {
     display: flex;
-    align-items: center;
     flex-direction: column;
     padding: 10px 0;
 }
 
 
-.movieForm-div input {
+.movieForm-div input, .movieForm-div select {
     border-radius: 10px;
-    width: 50%;
+    width: 100%;
     padding: 5px;
 }
 
-.movieForm-div label {
-    text-align: start;
-}
 
 .movieForm-div-button button, .movieForm-div-button button a  {
     padding: 10px;
@@ -70,7 +72,7 @@
 @media (min-width: 480px){
     .movieForm {
         width: 60%;
-        padding: 30px;
+        padding: 40px 80px;
         background-color: #e51b3e;
         color: white;
         border-radius: 15px;

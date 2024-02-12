@@ -6,7 +6,9 @@
     <%- include('./partials/header.ejs') %>
     <main class="movieForm-main">
         <form action='/movies/edit/<%= movie.id %>?_method=PUT' method="post" class="movieForm">
-            <img class="form-img" src="/img/assets/movie.svg" alt="">
+            <div class="img-box">
+                <img class="form-img" src="/img/assets/movie.svg" alt="">
+            </div>
             <div class="movieForm-div">
                 <label for="movieTitle">TITLE:</label>
                 <input type="text" name="title" id="movieTitle" value="<%= movie.title %>">
@@ -31,6 +33,23 @@
                 <label for="releaseDate">RELEASE DATE:</label>
                 <input type="date" name="release_date" id="releaseDate"  value="<%= movie.release_date %>">
                 <p><%= locals.errors && errors.release_date ? errors.release_date.msg : null %></p>
+            </div>
+            <div class="movieForm-div">
+                <select name="genre" id="genre">
+                    <option value="">Select a genre</option>
+                    <% genres.forEach(genre=>{ %>
+                        <% if(genre.id == movie.genre_id){ %>
+                            <option value="<%= genre.id %>" selected>
+                                <%= genre.name %>
+                            </option>
+        
+                            <% } else { %>
+                                <option value="<%= genre.id %>">
+                                    <%= genre.name %>
+                                </option>
+                        <% } %>
+                    <%}) %>
+                </select>
             </div>
             <div class="movieForm-div-button">
                 <button type="submit">Update</button>

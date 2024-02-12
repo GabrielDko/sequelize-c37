@@ -6,7 +6,9 @@
     <%- include('./partials/header.ejs') %>
     <main class="movieForm-main">
         <form action='/movies/create' method="post" class="movieForm">
-            <img class="form-img" src="/img/assets/actor.svg" alt="">
+            <div class="img-box">
+                <img class="form-img" src="/img/assets/actor.svg" alt="">
+            </div>
             <div class="movieForm-div">
                 <label for="actorfirst_name">Nombre:</label>
                 <input type="text" name="first_name" id="actorfirst_name">
@@ -23,8 +25,8 @@
                 <p><%= locals.errors && errors.rating ? errors.rating.msg : null %></p>
             </div>
             <div class="movieForm-div-button">
-                <button type="submit">Enviar</button>
-                <button type="reset">Reiniciar</button>
+                <button type="submit">Send</button>
+                <button type="reset">Reset</button>
             </div>
 
         </form>

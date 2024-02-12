@@ -6,7 +6,9 @@
     <%- include('./partials/header.ejs') %>
     <main class="movieForm-main">
         <form action='/movies/create' method="post" class="movieForm">
+           <div class="img-box">
             <img class="form-img" src="/img/assets/movie.svg" alt="">
+           </div>
             <div class="movieForm-div">
                 <label for="movieTitle">TITLE:</label>
                 <input type="text" name="title" id="movieTitle">
@@ -32,6 +34,14 @@
                 <label for="releaseDate">RELEASE DATE:</label>
                 <input type="date" name="release_date" id="releaseDate">
                 <p><%= locals.errors && errors.release_date ? errors.release_date.msg : null %></p>
+            </div>
+            <div class="movieForm-div">
+                <select name="genre" id="genre">
+                    <option value="">Select a genre</option>
+                    <% genres.forEach(genre=>{ %>
+                        <option value="<%= genre.id %>"><%= genre.name %></option>
+                    <%}) %>
+                </select>
             </div>
             <div class="movieForm-div-button">
                 <button type="submit">Send</button>

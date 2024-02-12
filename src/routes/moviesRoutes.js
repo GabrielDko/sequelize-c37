@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {list, detail,newMovies,recomended, add,create, edit,processEdit,deleteMovie} = require('../controllers/moviesController');
+const {list, detail,newMovies,recomended, add,create, edit,processEdit,deleteMovie, deleteForm} = require('../controllers/moviesController');
 const movieRegisterValidator = require('../validations/movieRegisterValidator');
 const movieUpdateValidator = require('../validations/movieUpdateValidator')
 
@@ -35,6 +35,8 @@ router
 // Ruta que procesa la solcitud de edición de una pelicula.
 .put('/movies/edit/:id',movieUpdateValidator,processEdit)
 
+
+.get('/movies/deleteForm/:id', deleteForm)
 // Ruta que procesa la solcitud de eliminación de una pelicula.
 
 .delete('/movies/delete/:id',deleteMovie)

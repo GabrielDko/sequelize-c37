@@ -49,7 +49,10 @@ const actorsController = {
         .catch(err => console.log(err));
     },
     edit:(req,res)=>{
-        res.render('actorEdit', {title: 'Formulario de edición de actor'})
+        db.Actor.findByPk(req.params.id)
+            .then((actor)=>{
+                res.render('actorEdit', {actor:actor,title: 'Formulario de edición de actor'})
+            })
     },
     processEdit:(req,res)=>{
         db.Genre.update({
