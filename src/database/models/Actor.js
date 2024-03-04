@@ -20,12 +20,31 @@ module.exports = (sequelize, DataTypes) => {
         rating: {
             type: DataTypes.DECIMAL,
             allowNull: true,
+        },
+        created_at: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updated_at: {
+            type: DataTypes.DATE,
+            allowNull: false        
+        },
+        favorite_movie_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: {
+                    tableName: 'movies'
+                },
+                key: 'id'
+            },
+            onDelete: 'cascade'
         }
         
     }
     const config = {
         tableName: 'actors',
-        timestamps: true
+        timestamps: false
     }
     const Actor = sequelize.define(alias,cols,config)
 
@@ -35,7 +54,8 @@ module.exports = (sequelize, DataTypes) => {
             through: "actor_movie",
             foreignKey: "actor_id",
             otherKey: "movie_id",
-            timestamps: false
+            timestamps: false,
+            onDelete: 'CASCADE'
         })
     }
     

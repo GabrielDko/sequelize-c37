@@ -22,11 +22,19 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             unsigned: true
-        }
+        },
+        created_at: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updated_at: {
+            type: DataTypes.DATE,
+            allowNull: false        
+        },
     }
     const config = {
         tableName: 'genres',
-        timestamps: true
+        timestamps: false
     }
     const Genre = sequelize.define(alias,cols,config)
 

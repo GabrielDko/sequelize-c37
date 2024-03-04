@@ -73,13 +73,16 @@ const moviesController = {
             })
             .catch(err => console.log(err))
         }else {
+            const currentDate = new Date()
             db.Movie.create({
                 title: req.body.title,
                 rating: req.body.rating,
                 awards: req.body.awards,
                 release_date: req.body.release_date,
                 length: req.body.length,
-                genre_id: req.body.genre
+                genre_id: req.body.genre,
+                created_at: currentDate,
+                updated_at: currentDate
             })
             .then(()=>{
                 res.redirect('/movies')
@@ -91,7 +94,6 @@ const moviesController = {
         
     },
     edit:(req,res)=>{
-        
         const movieRequest = db.Movie.findByPk(req.params.id)
         const genreRequest = db.Genre.findAll()
         Promise.all([movieRequest,genreRequest])
@@ -143,16 +145,34 @@ const moviesController = {
                 console.log(err);
             })
     },
-    deleteMovie:(req,res)=>{
-        db.Movie.destroy({
-            where: {
-                id: req.params.id
+    deleteMovie: async (req,res)=>{
+        try {
+            const movieId = req.params.id
+            // Eliminar registros en la tabla pivot movie_movie que corresponden al movie
+            await db.ActorMovie.destroy({
+                where: {
+                    movie_id: movieId
+                }
+            });
+            await db.Actor.update({ favorite_movie_id: null }, {
+                where: { favorite_movie_id: movieId }
+            });
+            // Luego de eliminar las relaciones, elimina al movie
+            const numDeleted = await db.Movie.destroy({
+                where: {
+                    id: movieId
+                }
+            });
+    
+            if (numDeleted === 1) {
+                res.redirect('/movies')
+            } else {
+                throw new Error(`No se encontró al movie con ID ${movieId}`);
             }
-        })
-        .then(()=>{
-            res.redirect('/movies');
-        })
-        .catch(err => console.log('Destroy error:' ,err));
+        } catch (error) {
+            console.error('Error al eliminar al movie:', error);
+        }
+        
     }
 }
 

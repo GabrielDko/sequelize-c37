@@ -4,7 +4,7 @@ const db = require('../database/models')
 let movieUpdateValidator=[
     body("title")
     .notEmpty().withMessage("*Debes ingresar un título.").bail()
-    .isLength({min:5, max:25}).withMessage("*Debe poseer una cantidad mínima de 5 carácteres y una máxima de 25.")
+    .isLength({min:5, max:40}).withMessage("*Debe poseer una cantidad mínima de 5 carácteres y una máxima de 40.")
     .custom((value, { req }) => {
         return db.Movie.findOne({
             where: {

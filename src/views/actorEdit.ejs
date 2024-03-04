@@ -24,11 +24,33 @@
                 <input type="number" name="rating" id="rating" step="0.1"  value="<%= actor.rating %>">
                 <p><%= locals.errors && errors.rating ? errors.rating.msg : null %></p>
             </div>
+            <div>
+                <label>Películas:</label><br>
+                <% allMovies.forEach(movie => { %>
+                    <input type="checkbox" id="movie_<%= movie.id %>" name="movies" value="<%= movie.id %>"
+                        <% if(actorMovies.some(actorMovie => actorMovie.id === movie.id)){ %>
+                            checked 
+                        <% } %>>
+                    <label for="movie_<%= movie.id %>"><%= movie.title %></label><br>
+                <% }) %>
+            </div>
+            <div class="movieForm-div">
+                <label for="favorite_movie">Favorite movie</label>
+                <select name="favorite_movie" id="favorite_movie">
+                    <option value="">Select favorite</option>
+                    <% allMovies.forEach(movie => { %>
+                        <option value="<%= movie.id %>" <%= movie.id == actor.favorite_movie_id ? "selected" : null %>><%= movie.title %></option>
+                    <% }) %>
+                </select>
+            </div>
+            
             <div class="movieForm-div-button">
                 <button type="submit">Edit</button>
                 <button type="reset">Reset</button>
             </div>
         </form>
+        <a href="/actors/deleteForm/<%= actor.id %>"><button>¿Destroy?</button></a>
+        <a href="/actors/detail/<%= actor.id %>"><button>¿Detail?</button></a>
 
 
     </main>
