@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const alias = 'Movie' 
+    const alias = 'Movie'
 
     const cols = {
         id: {
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         rating: {
-            type: DataTypes.DECIMAL(3,1),
+            type: DataTypes.DECIMAL(3, 1),
             allowNull: false,
             unsigned: true
         },
@@ -31,14 +31,49 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             unsigned: true
         },
+        created_at: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updated_at: {
+            type: DataTypes.DATE,
+            allowNull: false        
+        },
         genre_id: {
             type: DataTypes.INTEGER,
-            unsigned: true
+            allowNull: true,
+            references: {
+                model: {
+                    tableName: 'genres'
+                },
+                key: 'id'
+            },
+            onDelete: 'cascade'
         }
     }
     const config = {
         tableName: 'movies',
-        timestamps: true
+        timestamps: false
     }
-    return sequelize.define(alias,cols,config)
+    const Movie = sequelize.define(alias, cols, config)
+
+    Movie.associate = (models) => {
+        Movie.belongsTo(models.Genre, {
+            as: "genre",
+            foreignKey: 'genre_id'
+        });
+
+
+        Movie.belongsToMany(models.Actor, {
+            as: "actors",
+            through: "actor_movie",
+            foreignKey: "movie_id",
+            otherKey: "actor_id",
+            timestamps: false,
+            onDelete: 'CASCADE'
+            
+        });
+    }
+
+    return Movie;
 }

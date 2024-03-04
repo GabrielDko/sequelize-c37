@@ -5,8 +5,10 @@
 <body class="black-body">
     <%- include('./partials/header.ejs') %>
     <main class="movieForm-main">
-        <form action='/movies/create' method="post" class="movieForm">
-            <img class="form-img" src="/img/assets/actor.svg" alt="">
+        <form action='/actors/create' method="post" class="movieForm">
+            <div class="img-box">
+                <img class="form-img" src="/img/assets/actor.svg" alt="">
+            </div>
             <div class="movieForm-div">
                 <label for="actorfirst_name">Nombre:</label>
                 <input type="text" name="first_name" id="actorfirst_name">
@@ -22,9 +24,27 @@
                 <input type="number" name="rating" id="rating" step="0.1">
                 <p><%= locals.errors && errors.rating ? errors.rating.msg : null %></p>
             </div>
+            <div>
+                <label for="movies">Películas:</label>
+                <br>
+                    <% movies.forEach(movie => { %>
+                        <br>
+                        <input type="checkbox" name="movies" value="<%= movie.id %>"><%= movie.title %></input>
+                    <% }); %>
+                
+            </div>
+            <div  class="movieForm-div">
+                <label for="favorite_movie">Favorite movie:</label>
+                <select name="favorite_movie" id="favorite_movie">
+                    <option value="">Selecciona una pelicula</option>
+                    <% movies.forEach(movie => { %>
+                        <option value="<%= movie.id %>"> <%= movie.title %></option>
+                    <% }) %>
+                </select>
+            </div>
             <div class="movieForm-div-button">
-                <button type="submit">Enviar</button>
-                <button type="reset">Reiniciar</button>
+                <button type="submit">Send</button>
+                <button type="reset">Reset</button>
             </div>
 
         </form>

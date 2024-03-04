@@ -14,7 +14,12 @@ const moviesController = {
             })
     },
     detail:(req,res)=>{
-        db.Movie.findByPk(req.params.id)
+        db.Movie.findByPk(req.params.id,{
+            include: [
+                {association: 'genre'},
+                {association: 'actors'}
+            ]
+        })
             .then((movie)=>{
                 res.render('moviesDetail', {movie:movie,title:`${movie.dataValues.title}`})
             })
@@ -51,20 +56,33 @@ const moviesController = {
         })
     },
     add:(req,res)=>{
-        res.render('movieForm',{title:'Formulario de pelicula'})
+        db.Genre.findAll()
+            .then((genres)=>{
+                return res.render('movieForm',{genres:genres,title:'Formulario de pelicula'})
+            })
+            .catch(err => console.log(err))
+        
     },
     create:(req,res)=>{
         const errors = validationResult(req)
         console.log('Controlador create errors:',errors.mapped());
         if (!errors.isEmpty()){
-            res.render('movieForm', {errors:errors.mapped(),title:'Formulario de pelicula'})
+            db.Genre.findAll()
+            .then((genres)=>{
+                return res.render('movieForm',{errors:errors.mapped(),genres:genres,title:'Formulario de pelicula'})
+            })
+            .catch(err => console.log(err))
         }else {
+            const currentDate = new Date()
             db.Movie.create({
                 title: req.body.title,
                 rating: req.body.rating,
                 awards: req.body.awards,
                 release_date: req.body.release_date,
-                length: req.body.length
+                length: req.body.length,
+                genre_id: req.body.genre,
+                created_at: currentDate,
+                updated_at: currentDate
             })
             .then(()=>{
                 res.redirect('/movies')
@@ -76,28 +94,32 @@ const moviesController = {
         
     },
     edit:(req,res)=>{
-        db.Movie.findByPk(req.params.id)
-            .then((movie)=>{
+        const movieRequest = db.Movie.findByPk(req.params.id)
+        const genreRequest = db.Genre.findAll()
+        Promise.all([movieRequest,genreRequest])
+            .then(([movie, genres])=>{
                 const fecha = new Date(movie.dataValues.release_date);
                 const año = fecha.getFullYear();
                 const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
                 const dia = fecha.getDate().toString().padStart(2, '0');
                 const fechaFormateada = `${año}-${mes}-${dia}`
                 movie.dataValues.release_date = fechaFormateada;
-                res.render('movieEdit', {movie:movie, title:'Formulario de edición de pelicula'})
+                res.render('movieEdit', {movie:movie, genres:genres, title:'Formulario de edición de pelicula'})
             })
             .catch(err =>{
                 console.log(err);
             })
     },
     processEdit:(req,res)=>{
+        console.log('Fecha update', req.body.release_date);
         const {id} = req.params
         db.Movie.update({
             title: req.body.title,
             rating: req.body.rating,
             awards: req.body.awards,
             release_date: req.body.release_date,
-            length: req.body.length
+            length: req.body.length,
+            genre_id: req.body.genre
         },{
             where: {
                 id
@@ -109,16 +131,48 @@ const moviesController = {
             console.log(err);
         })
     },
-    deleteMovie:(req,res)=>{
-        db.Movie.destroy({
-            where: {
-                id: req.params.id
+    deleteForm:(req,res)=>{
+        db.Movie.findByPk(req.params.id,{
+            include: [
+                {association: 'genre'},
+                {association: 'actors'}
+            ]
+        })
+            .then((movie)=>{
+                res.render('moviesDelete', {movie:movie,title:`${movie.dataValues.title}`})
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+    },
+    deleteMovie: async (req,res)=>{
+        try {
+            const movieId = req.params.id
+            // Eliminar registros en la tabla pivot movie_movie que corresponden al movie
+            await db.ActorMovie.destroy({
+                where: {
+                    movie_id: movieId
+                }
+            });
+            await db.Actor.update({ favorite_movie_id: null }, {
+                where: { favorite_movie_id: movieId }
+            });
+            // Luego de eliminar las relaciones, elimina al movie
+            const numDeleted = await db.Movie.destroy({
+                where: {
+                    id: movieId
+                }
+            });
+    
+            if (numDeleted === 1) {
+                res.redirect('/movies')
+            } else {
+                throw new Error(`No se encontró al movie con ID ${movieId}`);
             }
-        })
-        .then(()=>{
-            res.redirect('/movies');
-        })
-        .catch(err => console.log('Destroy error:' ,err));
+        } catch (error) {
+            console.error('Error al eliminar al movie:', error);
+        }
+        
     }
 }
 

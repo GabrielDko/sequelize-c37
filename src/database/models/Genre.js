@@ -22,11 +22,29 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             unsigned: true
-        }
+        },
+        created_at: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updated_at: {
+            type: DataTypes.DATE,
+            allowNull: false        
+        },
     }
     const config = {
         tableName: 'genres',
-        timestamps: true
+        timestamps: false
     }
-    return sequelize.define(alias,cols,config)
+    const Genre = sequelize.define(alias,cols,config)
+
+
+    Genre.associate = (models)=> {
+        Genre.hasMany(models.Movie,{
+            as: "movies",
+            foreignKey: 'genre_id'
+        })
+    }
+
+    return Genre;
 }
